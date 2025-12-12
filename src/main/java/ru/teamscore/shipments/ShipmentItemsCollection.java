@@ -90,11 +90,13 @@ public class ShipmentItemsCollection {
      * @return Суммарная стоимость промо-товаров со скидкой.
      */
     protected double calculatePromoSumWithDiscount(String[] promoArticles, double discount) {
-        if (discount <= 0) {
+        double safeDiscount = Math.min(discount, 100.0);
+
+        if (safeDiscount <= 0) {
             return this.promoSum(promoArticles);
         }
 
-        BigDecimal discountFactor = BigDecimal.valueOf(100 - discount).divide(HUNDRED, 4, RoundingMode.HALF_UP);
+        BigDecimal discountFactor = BigDecimal.valueOf(100 - safeDiscount).divide(HUNDRED, 4, RoundingMode.HALF_UP);
         Set<String> promoSet = Set.of(promoArticles);
 
         return items.stream()

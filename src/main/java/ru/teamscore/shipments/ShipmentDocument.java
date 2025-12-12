@@ -1,3 +1,5 @@
+package ru.teamscore.shipments;
+
 import java.util.*;
 
 /**
